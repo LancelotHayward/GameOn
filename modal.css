@@ -527,3 +527,7 @@ footer {
   }
 }
 
+/* My code */
+.display-block {
+  display: block;
+}
