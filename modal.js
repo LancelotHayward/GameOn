@@ -23,5 +23,5 @@ modalBtn.forEach((btn) => btn.addEventListener("click", toggleModal))
 
 //Form entry
 function submitForm() {
-    formData.forEach((entry) => console.log(entry.getElementsByTagName("input")))
+    formData.forEach((entry) => console.log(entry.getElementsByTagName("input")[0].value))
 }
