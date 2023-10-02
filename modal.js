@@ -21,36 +21,70 @@ function toggleModal() {
 //Toggle Modal Event
 modalBtn.forEach((btn) => btn.addEventListener("click", toggleModal))
 
-//Form Submit
-document.getElementsByTagName("form")[0].addEventListener('submit', (e) => {
-    e.preventDefault()
-})
 //Form entry
+function validateFirstName(first_name) {
+    if (first_name.length > 1) {
+        return true
+    }
+}
+function validateLastName(last_name) {
+    if (last_name.length > 1) {
+        return true
+    }
+}
+function validateEmail(email_address) {
+    if (email_address !== "") {
+        return true
+    }
+}
+function validateBirthDate(birth_date) {
+    
+}
+function validateTimesCome(times_come) {
+    if (times_come.length > 0) {
+        return true
+    }
+}
+function validateLocation(check_boxes) {
+    Array.from(check_boxes).forEach(check_box =>  {
+        if (check_box.type == "radio" && check_box.checked) {
+            return true
+        }
+    })
+}
+function validateTerms() {
+    
+}
+// function checkIfFormIsValid() {
+
+// }
 function submitForm() {
     // formData.forEach((entry) => console.log(entry.getElementsByTagName("input")[0].value))
     errorMessage = ""
-    if (document.getElementById("first").value.length < 2) {
+    if (!validateFirstName(document.getElementById("first").value)) {
         errorMessage += " first"
     }
-    if (document.getElementById("last").value.length < 2) {
+    if (!validateFirstName(document.getElementById("last").value)) {
         errorMessage += " last"
     }
-    if (document.getElementById("quantity").value === "") {
+    if (!validateTimesCome(document.getElementById("quantity").value)) {
         errorMessage += " quantity"
     }
-    if (document.getElementById("email").value === "") {
+    if (!validateEmail(document.getElementById("email").value)) {
         errorMessage += " email"
     }
-    checkBoxes = document.getElementsByClassName("checkbox-input")
-    locationCheck = false
-    Array.from(checkBoxes).forEach(checkBox =>  {
-            if (checkBox.type == "radio" && checkBox.checked) {
-                locationCheck = true
-            }
-        })
-    if (!locationCheck) {
+    if (!validateLocation(document.getElementsByClassName("checkbox-input"))) {  
         errorMessage += " location"
     }
+    // locationCheck = false
+    // Array.from(checkBoxes).forEach(checkBox =>  {
+    //         if (checkBox.type == "radio" && checkBox.checked) {
+    //             locationCheck = true
+    //         }
+    //     })
+    // if (!locationCheck) {
+    //     errorMessage += " location"
+    // }
     if (!document.getElementById("checkbox1").checked) {
         errorMessage += " terms"
     }
@@ -59,3 +93,9 @@ function submitForm() {
         return errorMessage
     }
 }
+//Form Submit
+document.getElementsByTagName("form")[0].addEventListener('submit', (e) => {
+    e.preventDefault()
+})
+document.getElementsByClassName("btn-submit")[0].addEventListener('click', submitForm)
+console.log(document.getElementsByClassName("btn-submit")[0])
