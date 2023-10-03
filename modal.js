@@ -46,11 +46,14 @@ function validateTimesCome(times_come) {
     }
 }
 function validateLocation(check_boxes) {
+    is_valid = false;
     Array.from(check_boxes).forEach(check_box =>  {
         if (check_box.type == "radio" && check_box.checked) {
-            return true
+            //return true
+            is_valid = true
         }
     })
+    return is_valid;
 }
 function validateTerms() {
     
@@ -62,6 +65,7 @@ function submitForm() {
     // formData.forEach((entry) => console.log(entry.getElementsByTagName("input")[0].value))
     errorMessage = ""
     if (!validateFirstName(document.getElementById("first").value)) {
+        document.getElementById("first").parentElement.setAttribute("data-error-visible","true")
         errorMessage += " first"
     }
     if (!validateFirstName(document.getElementById("last").value)) {
@@ -73,7 +77,8 @@ function submitForm() {
     if (!validateEmail(document.getElementById("email").value)) {
         errorMessage += " email"
     }
-    if (!validateLocation(document.getElementsByClassName("checkbox-input"))) {  
+    if (!validateLocation(document.getElementsByClassName("checkbox-input"))) {
+        console.log(validateEmail(document.getElementById("email").value))
         errorMessage += " location"
     }
     // locationCheck = false
@@ -87,15 +92,18 @@ function submitForm() {
     // }
     if (!document.getElementById("checkbox1").checked) {
         errorMessage += " terms"
+        document.getElementById("checkbox1").setAttribute("data-error","Vous devez vérifier que vous acceptez les termes et conditions.")
     }
     if (errorMessage != "") {
         errorMessage = "Errors:" + errorMessage
-        return errorMessage
+        console.log(errorMessage)
     }
 }
 //Form Submit
 document.getElementsByTagName("form")[0].addEventListener('submit', (e) => {
     e.preventDefault()
 })
-document.getElementsByClassName("btn-submit")[0].addEventListener('click', submitForm)
-console.log(document.getElementsByClassName("btn-submit")[0])
+function testFunction() {
+    console.log("boop")
+}
+document.getElementsByClassName("btn-submit")[0].addEventListener("click", submitForm)
