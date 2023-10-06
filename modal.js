@@ -21,89 +21,61 @@ function toggleModal() {
 //Toggle Modal Event
 modalBtn.forEach((btn) => btn.addEventListener("click", toggleModal))
 
-//Form entry
+//Form validation
 function validateFirstName(first_name) {
-    if (first_name.length > 1) {
-        return true
-    }
+    return (first_name.value.length > 1)
 }
 function validateLastName(last_name) {
-    if (last_name.length > 1) {
-        return true
-    }
+    return (last_name.value.length > 1)
 }
 function validateEmail(email_address) {
-    if (email_address !== "") {
-        return true
-    }
+    return (email_address.value !== "")
 }
 function validateBirthDate(birth_date) {
-    
+    return (birth_date.value !== "")
 }
 function validateTimesCome(times_come) {
-    if (times_come.length > 0) {
-        return true
-    }
+    return (times_come.value.length > 0)
 }
 function validateLocation(check_boxes) {
-    is_valid = false;
+    location_is_selected = false;
     Array.from(check_boxes).forEach(check_box =>  {
         if (check_box.type == "radio" && check_box.checked) {
-            //return true
-            is_valid = true
+            location_is_selected = true
         }
     })
-    return is_valid;
+    check_boxes[0].parentElement.setAttribute("data-error-visible", (!location_is_selected).toString())
+    return location_is_selected;
 }
-function validateTerms() {
-    
+function validateTerms(terms) {
+    return (terms.checked)
 }
-// function checkIfFormIsValid() {
-
-// }
+function validateForm() {
+    is_valid = true
+    validators = [
+        {id: "first", validator_function: validateFirstName},
+        {id: "last", validator_function: validateLastName},
+        {id: "email", validator_function: validateEmail},
+        {id: "birthdate", validator_function: validateBirthDate},
+        {id: "timescome", validator_function: validateTimesCome},
+        {id: "terms", validator_function: validateTerms}
+    ]
+    for (validator of validators) {
+        element = document.getElementById(validator.id)
+        element_is_valid = validator.validator_function(element)
+        element.parentElement.setAttribute("data-error-visible", (!element_is_valid).toString())
+        is_valid = is_valid && element_is_valid
+    }
+    location_is_selected = validateLocation(document.getElementsByClassName("checkbox-input"))
+    return is_valid && location_is_selected
+}
+//Form submition
 function submitForm() {
-    // formData.forEach((entry) => console.log(entry.getElementsByTagName("input")[0].value))
-    errorMessage = ""
-    if (!validateFirstName(document.getElementById("first").value)) {
-        document.getElementById("first").parentElement.setAttribute("data-error-visible","true")
-        errorMessage += " first"
-    }
-    if (!validateFirstName(document.getElementById("last").value)) {
-        errorMessage += " last"
-    }
-    if (!validateTimesCome(document.getElementById("quantity").value)) {
-        errorMessage += " quantity"
-    }
-    if (!validateEmail(document.getElementById("email").value)) {
-        errorMessage += " email"
-    }
-    if (!validateLocation(document.getElementsByClassName("checkbox-input"))) {
-        console.log(validateEmail(document.getElementById("email").value))
-        errorMessage += " location"
-    }
-    // locationCheck = false
-    // Array.from(checkBoxes).forEach(checkBox =>  {
-    //         if (checkBox.type == "radio" && checkBox.checked) {
-    //             locationCheck = true
-    //         }
-    //     })
-    // if (!locationCheck) {
-    //     errorMessage += " location"
-    // }
-    if (!document.getElementById("checkbox1").checked) {
-        errorMessage += " terms"
-        document.getElementById("checkbox1").setAttribute("data-error","Vous devez vérifier que vous acceptez les termes et conditions.")
-    }
-    if (errorMessage != "") {
-        errorMessage = "Errors:" + errorMessage
-        console.log(errorMessage)
+    if (validateForm()) {
+        console.log("Yip")
     }
 }
-//Form Submit
 document.getElementsByTagName("form")[0].addEventListener('submit', (e) => {
     e.preventDefault()
 })
-function testFunction() {
-    console.log("boop")
-}
 document.getElementsByClassName("btn-submit")[0].addEventListener("click", submitForm)
