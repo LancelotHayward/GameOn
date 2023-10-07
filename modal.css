@@ -108,7 +108,7 @@ main {
   padding-top: 0.5vw;
   padding-left: 2vw;
   padding-right: 2vw;
-  margin: 1px 20px 15px;
+  margin: 1px 20px 0;
   border-radius: 2rem;
   text-align: justify;
 
@@ -530,4 +530,17 @@ footer {
 /* My code */
 .display-block {
   display: block;
+}
+#form-submitted {
+  position: sticky;
+  bottom: 1vw;
+  right: 0;
+  padding: 20px;
+  background-color: white;
+  margin: -45px 5vw;
+  border-radius: 20px;
+  z-index: 9;
+}
+#form-submitted .close::after, #form-submitted .close::before {
+  background-color: black;
 }

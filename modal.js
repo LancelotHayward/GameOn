@@ -9,8 +9,9 @@ function editNav() {
 
 // DOM Elements
 const modalbg = document.querySelector(".bground");
-const modalBtn = document.querySelectorAll(".modal-btn, .close"); //my mod
+const modalBtn = document.querySelectorAll(".modal-btn, .modal-closer")
 const formData = document.querySelectorAll(".formData");
+const submittedMessage = document.getElementById("form-submitted")
 
 //My code
 // Toggle Modal Function
@@ -70,11 +71,16 @@ function validateForm() {
     return is_valid && location_is_selected
 }
 //Form submition
+function toggleSubmittedMessage() {
+    submittedMessage.classList.toggle("select-hide")
+}
 function submitForm() {
     if (validateForm()) {
-        console.log("Yip")
+        toggleModal()
+        toggleSubmittedMessage()
     }
 }
+submittedMessage.getElementsByClassName("close")[0].addEventListener("click", toggleSubmittedMessage)
 document.getElementsByTagName("form")[0].addEventListener('submit', (e) => {
     e.preventDefault()
 })
