@@ -215,7 +215,7 @@ input {
   display: block;
   margin-top: 7px;
   margin-bottom: 7px;
-  text-align: right;
+  /* text-align: right; */
   line-height: 0.3;
   opacity: 0;
   transition: 0.3s;
@@ -405,7 +405,7 @@ input[data-error]::after {
   font-size: 16px;
 }
 .hero-section {
-  min-height: 93vh;
+  /* min-height: 93vh; */
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -515,6 +515,12 @@ footer {
     margin-top: 50px;
     text-align: center;
   }
+  .content {
+    margin: unset;
+    max-width: unset;
+    position: absolute;
+    bottom: 0;
+  }
 }
 
 @keyframes modalopen {
@@ -540,6 +546,7 @@ footer {
   margin: -45px 5vw;
   border-radius: 20px;
   z-index: 9;
+  border: solid #ff0000 5px;
 }
 #form-submitted .close::after, #form-submitted .close::before {
   background-color: black;
