@@ -30,7 +30,7 @@ function validateLastName(last_name) {
     return (last_name.value.length > 1)
 }
 function validateEmail(email_address) {
-    return (email_address.value !== "")
+    return /^([A-zÀ-ú0-9._%+-]+)@([A-zÀ-ú0-9.-])+.([A-zÀ-ú])(.[A-zÀ-ú]+)?$/.test(email.value)
 }
 function validateBirthDate(birth_date) {
     return (birth_date.value !== "")
