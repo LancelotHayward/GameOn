@@ -74,7 +74,11 @@ function validateForm() {
         element.parentElement.setAttribute("data-error-visible", (!element_is_valid).toString())
         is_valid = is_valid && element_is_valid
     }
-    return is_valid && validateLocation(document.getElementsByClassName("checkbox-input")) //Unfortunately the location checkboxes can't share a simple ID.
+    //Unfortunately the location checkboxes can't share a simple ID.
+    locations = document.getElementsByClassName("checkbox-input")
+    location_is_valid = validateLocation(locations)
+    locations[0].parentElement.setAttribute("data-error-visible", (!location_is_valid).toString())
+    return is_valid && location_is_valid
 }
 //Submition message (function and event)
 function toggleSubmittedMessage() {
