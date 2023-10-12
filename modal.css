@@ -533,21 +533,9 @@ footer {
   }
 }
 
-/* My code */
 .display-block {
   display: block;
 }
-#form-submitted {
-  position: sticky;
-  bottom: 1vw;
-  right: 0;
-  padding: 20px;
-  background-color: white;
-  margin: -45px 5vw;
-  border-radius: 20px;
-  z-index: 9;
-  border: solid #ff0000 5px;
-}
-#form-submitted .close::after, #form-submitted .close::before {
-  background-color: black;
+#submitted-message {
+  margin-bottom: 70vh;
 }

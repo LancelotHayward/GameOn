@@ -11,16 +11,20 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn, .modal-closer")
 const formData = document.querySelectorAll(".formData");
-const submittedMessage = document.getElementById("form-submitted")
+const submittedMessage = document.querySelectorAll(".bground")[1]
+const form = document.getElementsByTagName("form")[0]
 
-//My code
-// Toggle Modal Function
+//Toggle Modal (function and event)
 function toggleModal() {
     modalbg.classList.toggle("display-block")
 }
-
-//Toggle Modal Event
 modalBtn.forEach((btn) => btn.addEventListener("click", toggleModal))
+
+//Disable default form functionality and reset values
+form.addEventListener('submit', (e) => {
+    e.preventDefault()
+})
+form.reset()
 
 //Form validation
 function validateFirstName(first_name) {
@@ -29,8 +33,9 @@ function validateFirstName(first_name) {
 function validateLastName(last_name) {
     return (last_name.value.length > 1)
 }
-function validateEmail(email_address) {
-    return /^([A-zÀ-ú0-9._%+-]+)@([A-zÀ-ú0-9.-])+.([A-zÀ-ú])(.[A-zÀ-ú]+)?$/.test(email.value)
+function validateEmail(email) {
+    const emailRegex = /^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/
+    return emailRegex.test(email.value)
 }
 function validateBirthDate(birth_date) {
     return (birth_date.value !== "")
@@ -51,6 +56,8 @@ function validateLocation(check_boxes) {
 function validateTerms(terms) {
     return (terms.checked)
 }
+
+/* Contains a list of IDs and the function names, to call every validator and return true if all of themr return true.*/
 function validateForm() {
     is_valid = true
     validators = [
@@ -67,21 +74,19 @@ function validateForm() {
         element.parentElement.setAttribute("data-error-visible", (!element_is_valid).toString())
         is_valid = is_valid && element_is_valid
     }
-    location_is_selected = validateLocation(document.getElementsByClassName("checkbox-input"))
-    return is_valid && location_is_selected
+    return is_valid && validateLocation(document.getElementsByClassName("checkbox-input")) //Unfortunately the location checkboxes can't share a simple ID.
 }
-//Form submition
+//Submition message (function and event)
 function toggleSubmittedMessage() {
-    submittedMessage.classList.toggle("select-hide")
+    submittedMessage.classList.toggle("display-block")
 }
-function submitForm() {
+submittedMessage.getElementsByClassName("close")[0].addEventListener("click", toggleSubmittedMessage)
+
+//Submit form (function and event)
+function submitForm() { //If the form is valid then hide the modal and show the submitted message.
     if (validateForm()) {
         toggleModal()
         toggleSubmittedMessage()
     }
 }
-submittedMessage.getElementsByClassName("close")[0].addEventListener("click", toggleSubmittedMessage)
-document.getElementsByTagName("form")[0].addEventListener('submit', (e) => {
-    e.preventDefault()
-})
 document.getElementsByClassName("btn-submit")[0].addEventListener("click", submitForm)
