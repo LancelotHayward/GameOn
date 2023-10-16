@@ -14,8 +14,28 @@ const formData = document.querySelectorAll(".formData");
 const submittedMessage = document.querySelectorAll(".bground")[1]
 const form = document.getElementsByTagName("form")[0]
 
+//List of form elements to validate, and their validator functions
+const validators = [
+    {id: "first", validator_function: validateFirstName},
+    {id: "last", validator_function: validateLastName},
+    {id: "email", validator_function: validateEmail},
+    {id: "birthdate", validator_function: validateBirthDate},
+    {id: "timescome", validator_function: validateTimesCome},
+    {id: "terms", validator_function: validateTerms}
+]
+
+//Reset form
+function resetForm() {
+    form.reset()
+    for (element of validators) {
+        document.getElementById(element.id).parentElement.setAttribute("data-error-visible", "false")
+    }
+    document.getElementsByClassName("checkbox-input")[0].parentElement.setAttribute("data-error-visible", "false")
+}
+
 //Toggle Modal (function and event)
 function toggleModal() {
+    resetForm()
     modalbg.classList.toggle("display-block")
 }
 modalBtn.forEach((btn) => btn.addEventListener("click", toggleModal))
@@ -24,7 +44,6 @@ modalBtn.forEach((btn) => btn.addEventListener("click", toggleModal))
 form.addEventListener('submit', (e) => {
     e.preventDefault()
 })
-form.reset()
 
 //Form validation
 function validateFirstName(first_name) {
@@ -37,8 +56,12 @@ function validateEmail(email) {
     const emailRegex = /^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/
     return emailRegex.test(email.value)
 }
-function validateBirthDate(birth_date) {
-    return (birth_date.value !== "")
+function validateBirthDate(input_date) {
+    birth_values = input_date.value.split("-")
+    birth_date = new Date(birth_values[0], birth_values[1]-1,birth_values[2])
+    now = new Date()
+    difference = new Date(now.getTime() - birth_date.getTime()).getUTCFullYear() - 1970
+    return (birth_date.value !== "" && difference > 15)
 }
 function validateTimesCome(times_come) {
     return (times_come.value.length > 0)
@@ -57,17 +80,9 @@ function validateTerms(terms) {
     return (terms.checked)
 }
 
-/* Contains a list of IDs and the function names, to call every validator and return true if all of themr return true.*/
+/* Call every validator and return true if all of them return true.*/
 function validateForm() {
     is_valid = true
-    validators = [
-        {id: "first", validator_function: validateFirstName},
-        {id: "last", validator_function: validateLastName},
-        {id: "email", validator_function: validateEmail},
-        {id: "birthdate", validator_function: validateBirthDate},
-        {id: "timescome", validator_function: validateTimesCome},
-        {id: "terms", validator_function: validateTerms}
-    ]
     for (validator of validators) {
         element = document.getElementById(validator.id)
         element_is_valid = validator.validator_function(element)

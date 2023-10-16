@@ -537,5 +537,11 @@ footer {
   display: block;
 }
 #submitted-message {
-  margin-bottom: 70vh;
+  padding-top: 35vh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  font-size: 24pt;
+  gap: 35vh;
 }
