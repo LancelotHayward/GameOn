@@ -73,7 +73,6 @@ function validateLocation(check_boxes) {
             location_is_selected = true
         }
     })
-    check_boxes[0].parentElement.setAttribute("data-error-visible", (!location_is_selected).toString())
     return location_is_selected;
 }
 function validateTerms(terms) {
